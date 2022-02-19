@@ -5,8 +5,8 @@
         public static int MapWidthCount = 10;
         public static int MapHeightCount = 10;
 
-        public static int MapElementWidth = 20;
-        public static int MapElementHeight = 20;
+        public static int MapElementWidth = 25;
+        public static int MapElementHeight = 25;
 
 
 
