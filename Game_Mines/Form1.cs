@@ -13,10 +13,14 @@ namespace Game_Mines
         public Form1()
         {
             InitializeComponent();
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.Width = Options.MapElementWidth * (Options.MapWidthCount + 1);
+            this.Height = Options.MapElementHeight * (Options.MapHeightCount + 2);
+
             var panel = new Panel();
             panel.Dock = DockStyle.Fill;
             for (int i = 0; i < Options.MapHeightCount; i++)
@@ -45,6 +49,11 @@ namespace Game_Mines
                 if (element.IsBomb)
                 {
                     MessageBox.Show("Bomb !!!");
+
+                    element.IsShow = true;
+                    btn.Image = Properties.Resources.bomb;
+
+                    OpenElement();
                 }
                 else
 
@@ -94,6 +103,23 @@ namespace Game_Mines
 
                     }
                 }
+            }
+        }
+
+        private void OpenElement()
+        {
+            foreach (var item in _dictionary)
+            {
+                if (item.Value.IsBomb)
+                {
+                    item.Key.Image = Properties.Resources.bomb;
+                }
+                else
+                {
+                    Calculate(item.Value);
+                }
+                item.Value.IsShow = true;
+                item.Key.Enabled= false;
             }
         }
     }
