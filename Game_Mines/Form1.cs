@@ -116,11 +116,20 @@ namespace Game_Mines
                 }
                 else
                 {
-                    Calculate(item.Value);
+
+                    if (!item.Value.IsShow)
+                    {
+                        item.Value.IsShow = true;
+                        item.Key.Enabled = false;
+
+                        Calculate(item.Value);
+                    }
+
                 }
-                item.Value.IsShow = true;
-                item.Key.Enabled= false;
+
             }
         }
+
+
     }
 }
