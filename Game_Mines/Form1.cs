@@ -1,6 +1,7 @@
 ﻿using Game_Mines.Classes;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Game_Mines
@@ -25,7 +26,7 @@ namespace Game_Mines
                     var btn = new Button() { Width = Options.MapElementWidth, Height = Options.MapElementHeight, Left = i * Options.MapElementWidth, Top = j * Options.MapElementHeight };
                     btn.MouseDown += Btn_Click;
                     var element = new Element() { X = i, Y = j };
-                    if (element.IsBomb) btn.Text = "b";
+                    //if (element.IsBomb) btn.Text = "b";
                     _dictionary[btn] = element;
 
                     panel.Controls.Add(btn);
@@ -44,18 +45,39 @@ namespace Game_Mines
                 if (element.IsBomb) MessageBox.Show("Bomb !!!");
                 else
                 {
-                    var count = 0;
-                    foreach (var currElement in _dictionary.Values)
-                    {
-                        if (Math.Abs(currElement.X - element.X) <= 1 && Math.Abs(currElement.Y - element.Y) <= 1 && currElement.IsBomb ) count++;
-
-                    }
-                    btn.Text = count.ToString();
+                    Calculate(element);
+                    
                 }
             }
             else if (e.Button == MouseButtons.Right)
             {
 
+            }
+        }
+
+        private void Calculate(Element element)
+        {
+            element.IsShow = true;
+            var btn = _dictionary.Single(e => e.Value.X == element.X && e.Value.Y == element.Y).Key;
+            var count = 0;
+            foreach (var currElement in _dictionary.Values)
+            {
+                if (Math.Abs(currElement.X - element.X) <= 1 && Math.Abs(currElement.Y - element.Y) <= 1 && currElement.IsBomb) count++;
+
+            }
+
+            btn.Text = count.ToString();
+
+            if (count == 0)
+            {
+                foreach (var currElement in _dictionary.Values)
+                {
+                    if (Math.Abs(currElement.X - element.X) <= 1 && Math.Abs(currElement.Y - element.Y) <= 1 && !currElement.IsShow)
+                    {
+                        Calculate(currElement);
+
+                    }
+                }
             }
         }
     }
