@@ -122,5 +122,21 @@ namespace Game_Mines
                 item.Key.Enabled= false;
             }
         }
+
+        private void OpenElement()
+        {
+            foreach (var item in _dictionary)
+            {
+                if (item.Value.IsBomb)
+                {
+                    item.Key.Image = Properties.Resources.bomb;
+                }
+                else
+                {
+                    Calculate(item.Value);
+                }
+                item.Value.IsShow = true;
+            }
+        }
     }
 }
