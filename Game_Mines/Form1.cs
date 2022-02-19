@@ -42,15 +42,31 @@ namespace Game_Mines
 
             if (e.Button == MouseButtons.Left)
             {
-                if (element.IsBomb) MessageBox.Show("Bomb !!!");
-                else
+                if (element.IsBomb)
                 {
+                    MessageBox.Show("Bomb !!!");
+                }
+                else
+
+                {
+                    btn.Image = null;
                     Calculate(element);
-                    
+
                 }
             }
-            else if (e.Button == MouseButtons.Right)
+            else if (e.Button == MouseButtons.Right && !element.IsShow)
             {
+                if (element.IsMarkerAsBomb)
+                {
+                    btn.Image = null;
+                    element.IsMarkerAsBomb = false;
+
+                }
+                else
+                {
+                    btn.Image = Properties.Resources.bomb;
+                    element.IsMarkerAsBomb = true;
+                }
 
             }
         }
