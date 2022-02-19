@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Game_Mines.Classes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,7 @@ namespace Game_Mines
 {
     public partial class Form1 : Form
     {
-        int _mapWisthCount = 10;
-        int _mapHeightCount = 10;
-        int _bombs = 20;
+       
         public Form1()
         {
             InitializeComponent();
@@ -24,15 +23,22 @@ namespace Game_Mines
         {
             var panel = new Panel();
             panel. Dock = DockStyle.Fill;
-            for (int i = 0; i < _mapWisthCount; i++)
+            for (int i = 0; i < Options.MapHeightCount; i++)
             {
-                for (int j = 0; j < _mapHeightCount; j++)
+                for (int j = 0; j <Options.MapWidthCount; j++)
                 {
-                    var btn = new Button() { Width=20, Height=20, Left=i*20, Top=j*20};
+                    var btn = new Button() { Width=Options.MapElementWidth, Height=Options.MapElementHeight, Left=i* Options.MapElementWidth, Top=j* Options.MapElementHeight };
+                    btn.Click += Btn_Click;
+
                     panel.Controls.Add(btn);
                 }
             }
             this.Controls.Add(panel);
+        }
+
+        private void Btn_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
