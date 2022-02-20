@@ -19,15 +19,28 @@ namespace Game_Mines
         private void Form1_Load(object sender, EventArgs e)
         {
             this.Width = Options.MapElementWidth * (Options.MapWidthCount + 1);
-            this.Height = Options.MapElementHeight * (Options.MapHeightCount + 2);
+            this.Height = Options.MapElementHeight * (Options.MapHeightCount + 3);
+
+
+            MenuStrip menuStrip = new MenuStrip();
+            ToolStripMenuItem newGame = new ToolStripMenuItem("Новая игра", null, new EventHandler(NewGame_Click));
+
+            menuStrip.Items.Add(newGame);
+
+            menuStrip.Dock = DockStyle.Top;
+
+            this.Controls.Add(menuStrip);
+
+
 
             var panel = new Panel();
+
             panel.Dock = DockStyle.Fill;
             for (int i = 0; i < Options.MapHeightCount; i++)
             {
                 for (int j = 0; j < Options.MapWidthCount; j++)
                 {
-                    var btn = new Button() { Width = Options.MapElementWidth, Height = Options.MapElementHeight, Left = i * Options.MapElementWidth, Top = j * Options.MapElementHeight };
+                    var btn = new Button() { Width = Options.MapElementWidth, Height = Options.MapElementHeight, Left = i * Options.MapElementWidth, Top = (j + 1) * Options.MapElementHeight };
                     btn.MouseDown += Btn_Click;
                     var element = new Element() { X = i, Y = j };
                     //if (element.IsBomb) btn.Text = "b";
@@ -37,6 +50,12 @@ namespace Game_Mines
                 }
             }
             this.Controls.Add(panel);
+        }
+
+        void NewGame_Click(object sender, EventArgs e)
+        {
+           
+            System.Windows.Forms.Application.Restart();
         }
 
         private void Btn_Click(object sender, MouseEventArgs e)
@@ -113,6 +132,7 @@ namespace Game_Mines
                 if (item.Value.IsBomb)
                 {
                     item.Key.Image = Properties.Resources.bomb;
+                    item.Key.Enabled = false;
                 }
                 else
                 {
